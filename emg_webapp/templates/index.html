@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMG Fatigue Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand"><span>⚡</span> EMG Fatigue Detector</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/test">Start Test</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Muscle <span>Fatigue</span> Detection</h1>
+            <p>Real-time EMG based fatigue analysis using Machine Learning</p>
+            <a href="/test" class="btn-primary">Start Test →</a>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step glass-panel">
+                <div class="step-icon">💪</div>
+                <h3>Step 1</h3>
+                <p>Attach EMG sensor to your muscle for tracking</p>
+            </div>
+            <div class="step glass-panel">
+                <div class="step-icon">📡</div>
+                <h3>Step 2</h3>
+                <p>ESP32 reads and computes structural RMS values</p>
+            </div>
+            <div class="step glass-panel">
+                <div class="step-icon">🤖</div>
+                <h3>Step 3</h3>
+                <p>Advanced ML Model predicts your fatigue level</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="labels-section">
+        <h2>Fatigue Levels</h2>
+        <div class="label-cards">
+            <div class="label-card glass-panel normal">
+                <h3>✅ Normal</h3>
+                <p>RMS ~ 1800</p>
+                <p>Muscle is healthy and active</p>
+            </div>
+            <div class="label-card glass-panel moderate">
+                <h3>⚠️ Moderate</h3>
+                <p>RMS ~ 2200</p>
+                <p>Early signs of fatigue detected</p>
+            </div>
+            <div class="label-card glass-panel high">
+                <h3>🔴 High</h3>
+                <p>RMS ~ 2800</p>
+                <p>Significant fatigue — rest recommended</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>EMG Muscle Fatigue Detection System &copy; 2024</p>
+    </footer>
+</body>
+</html>

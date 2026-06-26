@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Test - EMG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand"><span>⚡</span> EMG Fatigue Detector</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/test">Start Test</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+
+    <div class="test-container">
+        <h1>Run Fatigue Test</h1>
+
+        <!-- Patient Input -->
+        <div class="input-section glass-panel" id="inputSection" style="padding: 3rem 2rem;">
+            <input type="text" id="patientName" placeholder="Enter patient name" class="input-field">
+            <button onclick="startTest()" class="btn-primary">Begin Session</button>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section glass-panel hidden" id="progressSection" style="padding: 3rem 2rem;">
+            <h2>Receiving Telemetry...</h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p id="progressText" style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem;">0 / 20 readings</p>
+            
+            <p class="live-rms">Live RMS: <span id="liveRms">--</span></p>
+
+            <!-- Live RMS Graph -->
+            <canvas id="rmsChart" width="600" height="250"></canvas>
+        </div>
+
+        <!-- Result Section -->
+        <div class="result-section hidden" id="resultSection">
+            <div class="result-card glass-panel" id="resultCard">
+                <h2 id="resultLabel"></h2>
+                <p>Average RMS: <strong id="resultRms"></strong></p>
+                <p>Confidence: <strong id="resultConfidence"></strong></p>
+                <p class="recommendation" id="recommendation"></p>
+                
+                <div style="margin-top: 2rem;">
+                    <button onclick="resetTest()" class="btn-primary" style="margin-right: 1rem;">Test Again</button>
+                    <a href="/history" class="btn-secondary">View History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

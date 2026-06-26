@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - EMG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand"><span>⚡</span> EMG Fatigue Detector</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/test">Start Test</a>
+            <a href="/history">History</a>
+        </div>
+    </nav>
+
+    <div class="history-wrapper">
+        <h1>Session History</h1>
+
+        {% if sessions %}
+        <div class="table-container">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Patient</th>
+                        <th>Avg RMS</th>
+                        <th>Result</th>
+                        <th>Confidence</th>
+                        <th>Timestamp</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    {% for s in sessions %}
+                    <tr id="row-{{ s.id }}">
+                        <td>{{ s.id }}</td>
+                        <td><strong>{{ s.patient }}</strong></td>
+                        <td style="font-family: monospace; font-size: 1.1rem; color: var(--accent-cyan);">{{ s.avg_rms }}</td>
+                        <td class="label-{{ s.label | lower | replace(' ', '-') }}">{{ s.label }}</td>
+                        <td>{{ s.confidence }}%</td>
+                        <td style="color: var(--text-muted); font-size: 0.9rem;">{{ s.timestamp }}</td>
+                        <td>
+                            <button class="btn-delete" onclick="deleteSession({{ s.id }})">🗑 Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state glass-panel">
+            <div class="empty-state-icon">🗂</div>
+            <h2>No sessions recorded yet</h2>
+            <p>Ready to analyze muscle fatigue? Head to the test page to begin.</p>
+            <a href="/test" class="btn-primary" style="margin-top: 1.5rem;">Run First Test</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function deleteSession(id) {
+            if (!confirm('Are you sure you want to delete this session?')) return;
+            fetch(`/api/delete/${id}`, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === 'deleted') {
+                    // Start a fade out transition
+                    const row = document.getElementById(`row-${id}`);
+                    row.style.opacity = '0';
+                    row.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        row.remove();
+                        // reload if no rows left to show empty state
+                        if (document.querySelectorAll('#historyBody tr').length === 0) {
+                            location.reload();
+                        }
+                    }, 300);
+                }
+            });
+        }
+    </script>
+
+    <footer>
+        <p>EMG Muscle Fatigue Detection System © 2024</p>
+    </footer>
+</body>
+</html>
